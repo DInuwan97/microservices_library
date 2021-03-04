@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 
-const mongoURI = 'mongodb://localhost:27017/library_books';
+const mongoURI = 'mongodb+srv://rp:rp123@cluster0.i9xwy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 
 
