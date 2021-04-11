@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 4545
 
-ENTRYPOINT ["node", "books.js"]
+ENTRYPOINT ["npm", "run", "dev"]

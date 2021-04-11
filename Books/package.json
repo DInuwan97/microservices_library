@@ -5,7 +5,8 @@
   "main": "books.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon books"
+    "start": "node books.js",
+    "dev":"nodemon books.js"
   },
   "author": "",
   "license": "ISC",

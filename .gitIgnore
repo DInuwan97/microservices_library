@@ -1,3 +1,2 @@
-/Books/node_modules
-/Customers/node_modules
-/Orders/node_modules
+**/node_modules
+**/datadir
