@@ -1,16 +1,18 @@
 version: "3"
 services:
   mongodb:
-    image: "mongo"
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./mongodb
     restart: always
     volumes:
-      - ./datadir:/data/db
+      - ./mongodb/datadir:/data/db
     ports:
       - "29017:27017"
     # environment: 
-    #   - MONGO_INITDB_ROOT_USERNAME=mongouser
-    #   - MONGO_INITDB_ROOT_PASSWORD=12345
-    #   - MONGO_INITDB_DATABASE=microservices
+      # - MONGO_INITDB_ROOT_USERNAME=mongouser
+      # - MONGO_INITDB_ROOT_PASSWORD=12345
+      # - MONGO_INITDB_DATABASE=microservices
   book-service:
     depends_on:
       - mongodb
@@ -23,10 +25,11 @@ services:
     ports:
       - "4545:4545"
     environment:
-      - MONGO_USERNAME=mongouser
-      - MONGO_PASSWORD=12345
+      - MONGO_USERNAME=bookuser
+      - MONGO_PASSWORD=book123
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
+      - MONGO_DATABASE=library_books
   customer-service:
     depends_on:
       - mongodb
@@ -39,10 +42,11 @@ services:
     ports:
       - "5555:5555"
     environment:
-      - MONGO_USERNAME=mongouser
-      - MONGO_PASSWORD=12345
+      - MONGO_USERNAME=customeruser
+      - MONGO_PASSWORD=customer123
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
+      - MONGO_DATABASE=library_customers
   order-service:
     depends_on:
       - mongodb
@@ -55,7 +59,8 @@ services:
     ports:
       - "6565:6565"
     environment:
-      - MONGO_USERNAME=mongouser
-      - MONGO_PASSWORD=12345
+      - MONGO_USERNAME=orderuser
+      - MONGO_PASSWORD=order123
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
+      - MONGO_DATABASE=library_orders
