@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: order-service
+  template:
+    metadata:
+      labels:
+        component: order-service
+    spec:
+      containers:
+        - name: microservice-order
+          image: sachinathu/microservices-order
+          ports:
+            - containerPort: 6565
+          env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongousername
+                  key:  MONGO_USERNAME
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongopassword
+                  key:  MONGO_PASSWORD
+            - name: MONGO_HOST
+              value: mongodb-node-port
+            - name: MONGO_PORT
+              value: '27017'
