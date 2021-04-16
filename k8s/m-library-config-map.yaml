@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: m-library-config-map
+data:
+  MONGO_HOST: mongodb-cluster-ip-service
+  MONGO_HOST_DEV: mongodb-node-port
+  MONGO_PORT: '27017'

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: book-service
+  template:
+    metadata:
+      labels:
+        component: book-service
+    spec:
+      containers:
+        - name: microservice-book
+          image: sachinathu/microservices-book:latest
+          ports:
+            - containerPort: 4545
+              protocol: TCP
+          imagePullPolicy: Always
+          env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongobook
+                  key:  MONGO_USERNAME
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongobook
+                  key:  MONGO_PASSWORD
+            - name: MONGO_DATABASE
+              valueFrom: 
+                secretKeyRef:
+                  name: mongobook
+                  key: MONGO_DATABASE
+            - name: MONGO_HOST
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_HOST
+            - name: MONGO_PORT
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_PORT

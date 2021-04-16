@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: order-service
+  template:
+    metadata:
+      labels:
+        component: order-service
+    spec:
+      containers:
+        - name: microservice-order
+          image: sachinathu/microservices-order:latest
+          ports:
+            - containerPort: 6565
+              protocol: TCP
+          imagePullPolicy: Always
+          env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongoorder
+                  key:  MONGO_USERNAME
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongoorder
+                  key:  MONGO_PASSWORD
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongoorder
+                  key:  MONGO_DATABASE
+            - name: MONGO_HOST
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_HOST
+            - name: MONGO_PORT
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_PORT

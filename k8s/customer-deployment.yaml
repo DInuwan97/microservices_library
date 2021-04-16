@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: customer-service
+  template:
+    metadata:
+      labels:
+        component: customer-service
+    spec:
+      containers:
+        - name: microservice-customer
+          image: sachinathu/microservices-customer:latest
+          ports:
+            - containerPort: 5555
+              protocol: TCP
+          imagePullPolicy: Always
+          env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongocustomer
+                  key:  MONGO_USERNAME
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongocustomer
+                  key:  MONGO_PASSWORD
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongocustomer
+                  key:  MONGO_DATABASE
+            - name: MONGO_HOST
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_HOST
+            - name: MONGO_PORT
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_PORT

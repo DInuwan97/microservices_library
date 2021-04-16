@@ -1,3 +1,5 @@
+const keys = require('./keys')
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
@@ -5,11 +7,8 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.json());
 
-
-const mongoURI = 'mongodb+srv://rp:rp123@cluster0.i9xwy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-
-
-
+// const mongoURI = 'mongodb+srv://rp:rp123@cluster0.i9xwy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const mongoURI = `mongodb://${keys.mongoHost}:${keys.mongoPort}/library_books`
 
 mongoose
     .connect(mongoURI,{useNewUrlParser: true , useUnifiedTopology :  true})
@@ -19,6 +18,7 @@ mongoose
 
 
 const Book = require('./Book');
+const { mongoPort } = require('./keys');
 
 
 app.get('/books',async (req,res)=>{

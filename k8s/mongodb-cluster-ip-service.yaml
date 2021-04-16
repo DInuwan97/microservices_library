@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-cluster-ip-service
+  labels:
+    component: mongodb
+spec:
+  type: ClusterIP
+  selector:
+    component: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP

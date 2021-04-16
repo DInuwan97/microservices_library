@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:alpine
 
 WORKDIR /app
 
@@ -7,6 +7,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 4545
+EXPOSE 6565
 
-ENTRYPOINT ["node", "books.js"]
+ENTRYPOINT ["npm", "run", "dev"]
