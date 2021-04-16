@@ -14,21 +14,34 @@ spec:
     spec:
       containers:
         - name: microservice-order
-          image: sachinathu/microservices-order
+          image: sachinathu/microservices-order:latest
           ports:
             - containerPort: 6565
+              protocol: TCP
+          imagePullPolicy: Always
           env:
             - name: MONGO_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mongousername
+                  name: mongoorder
                   key:  MONGO_USERNAME
             - name: MONGO_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongopassword
+                  name: mongoorder
                   key:  MONGO_PASSWORD
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongoorder
+                  key:  MONGO_DATABASE
             - name: MONGO_HOST
-              value: mongodb-node-port
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_HOST
             - name: MONGO_PORT
-              value: '27017'
+              valueFrom: 
+                configMapKeyRef:
+                  name: m-library-config-map
+                  key: MONGO_PORT

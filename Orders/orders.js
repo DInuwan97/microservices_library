@@ -48,11 +48,11 @@ app.get("/orders/:id", async (req, res) => {
   
       if (resOrder) {
         axios
-          .get("http://customer-service:5555/customers/" + resOrder.customerId)
+          .get("/customer/customers/" + resOrder.customerId)
           .then((resCustomer) => {
             if (resCustomer) {
               axios
-                .get("http://book-service:4545/books/" + resOrder.bookId)
+                .get("/book/books/" + resOrder.bookId)
                 .then((resBook) => {
                   if (resBook) {
                     let authorObj = {

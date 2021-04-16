@@ -8,5 +8,6 @@ spec:
     - port: 6565
       targetPort: 6565
       nodePort: 31065
+      protocol: TCP
   selector:
     component: order-service

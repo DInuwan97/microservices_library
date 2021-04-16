@@ -8,5 +8,6 @@ spec:
     - port: 5555
       targetPort: 5555
       nodePort: 31055
+      protocol: TCP
   selector:
     component: customer-service

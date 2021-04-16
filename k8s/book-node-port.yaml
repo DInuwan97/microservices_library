@@ -8,5 +8,6 @@ spec:
     - port: 4545
       targetPort: 4545
       nodePort: 31045
+      protocol: TCP
   selector:
     component: book-service

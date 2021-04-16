@@ -12,11 +12,20 @@ spec:
       labels:
         component: mongodb
     spec:
+      volumes:
+        - name: mongodb-storage
+          persistentVolumeClaim:
+            claimName: microservices-database-pvc
       containers:
         - name: microservice-mongodb
-          image: mongo
+          image: sachinathu/microservices-mongo:latest
           ports:
             - containerPort: 27017
+              protocol: TCP
+          volumeMounts:
+            - name: mongodb-storage
+              mountPath: /data/db
+              subPath: mongodb
           # env:
           #   - name: MONGO_INITDB_ROOT_USERNAME
           #     valueFrom:
